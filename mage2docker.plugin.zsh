@@ -2,7 +2,6 @@
 #
 # Plugin for Oh-My-Zsh
 
-
 _docker_get_container_name () {
 	docker ps | awk '{if(NR>1) print $NF}'
 }
@@ -16,6 +15,7 @@ _mage2docker_mage() {
 }
 
 _mage2docker() { 
+
     local curcontext="$curcontext" state line
     typeset -A opt_args
  
@@ -80,6 +80,11 @@ mage2docker () {
 
 }
 
-compdef _mage2docker mage2docker
+if type "docker" > /dev/null; then
+ 
+	compdef _mage2docker mage2docker
+	alias m2d='mage2docker'
 
-alias m2d='mage2docker'
+else 
+	echo "mage2docker - docker is not installed"
+fi
