@@ -18,6 +18,10 @@ _mage2docker_report() {
 	compadd `docker exec -u www-data $1 ls -tr var/report`
 }
 
+_mage2docker_log(){
+	compadd `docker exec -u www-data $1 ls -tr var/log`
+}
+
 _mage2docker() { 
 
     local curcontext="$curcontext" state line
@@ -33,7 +37,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-di mage-upgrade mage-report grunt rename rm restart stop inspect top
+	compadd "$@" bash-www bash logs magento mage mage-cache mage-di mage-upgrade mage-report mage-log grunt rename rm restart stop inspect top
     ;;	
     options)
         case $words[3] in
@@ -42,6 +46,9 @@ _mage2docker() {
         ;;
 	mage-report)
 	    _mage2docker_report $words[2]
+	;;
+	mage-log)
+	    _mage2docker_log $words[2]
 	;;	
 	esac
     esac
@@ -58,7 +65,7 @@ mage2docker () {
 	docker logs -f $1 
 	;;
    bash)	
-	docker exec -it $1 bash
+	docker exec -it -u root $1 bash
 	;;
    bash-www)
 	docker exec -it -u www-data $1 bash
@@ -87,8 +94,15 @@ mage2docker () {
    mage-report)
 	docker exec -it -u www-data $1 cat var/report/$3
    ;;
+   mage-log)
+	docker exec -it -u www-data $1 tail -f var/log/$3
+   ;;
    *)
-	docker ps 
+	if [ ! "$1" ]; then
+   		docker ps
+	else
+		docker exec -it -u www-data $1 bash
+	fi	
    	;;	
    esac			
 
