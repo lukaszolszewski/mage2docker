@@ -37,7 +37,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-di mage-upgrade mage-report mage-log grunt rename rm restart stop inspect top
+	compadd "$@" bash-www bash logs magento mage mage-cache mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top
     ;;	
     options)
         case $words[3] in
@@ -90,6 +90,9 @@ mage2docker () {
 	;;
    grunt)
 	docker exec -it -u www-data $1 grunt
+	;;
+   watch)
+	docker exec -it -u www-data $1 grunt watch
 	;;
    mage-report)
 	docker exec -it -u www-data $1 cat var/report/$3
