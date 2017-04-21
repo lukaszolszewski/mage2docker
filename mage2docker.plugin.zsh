@@ -37,7 +37,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top
+	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top
     ;;	
     options)
         case $words[3] in
@@ -78,6 +78,9 @@ mage2docker () {
    	;;
    mage-cache)
 	_mage2docker_mage $1 cache:clean	
+   	;;
+   mage-reindex)
+	_mage2docker_mage $1 indexer:reindex
    	;;
    mage-upgrade)
 	_mage2docker_mage $1 setup:upgrade
