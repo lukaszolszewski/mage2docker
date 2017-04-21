@@ -94,6 +94,9 @@ mage2docker () {
    grunt)
 	docker exec -it -u www-data $1 grunt
 	;;
+   watch)
+	docker exec -it -u www-data $1 grunt watch
+	;;
    mage-report)
 	docker exec -it -u www-data $1 cat var/report/$3
    ;;
