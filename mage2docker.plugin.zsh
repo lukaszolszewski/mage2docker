@@ -137,7 +137,7 @@ mage2docker () {
 	if [ ! "$1" ]; then
    		docker ps
 	else
-		docker exec -it -u www-data $1 bash
+		docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
 	fi
    	;;
    esac
