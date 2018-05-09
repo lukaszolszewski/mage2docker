@@ -78,10 +78,10 @@ mage2docker () {
 	docker logs -f $1
 	;;
    bash)
-	docker exec -it -u root $1 bash
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash
 	;;
    bash-www)
-	docker exec -it -u www-data $1 bash
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
 	;;
    magento)
 	docker exec -it -u www-data $1 bin/magento
