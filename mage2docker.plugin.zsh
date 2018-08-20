@@ -78,7 +78,7 @@ mage2docker () {
 	docker logs -f $1
 	;;
    bash)
-	docker exec -it q -u root $1 bash
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash
 	;;
    bash-www)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
