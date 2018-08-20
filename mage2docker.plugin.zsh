@@ -78,7 +78,7 @@ mage2docker () {
 	docker logs -f $1
 	;;
    bash)
-	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash
+	docker exec -it q -u root $1 bash
 	;;
    bash-www)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
@@ -115,6 +115,9 @@ mage2docker () {
    ;;
    redis-flushall)
 	docker exec -it $1 redis-cli flushall
+   ;;
+   vst)
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 varnishstat
    ;;
    mage-log)
 	docker exec -it -u www-data $1 tail -f var/log/$3
