@@ -50,7 +50,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst stats redis-flushall
+	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst redis-flushall
     ;;
     options)
         case $words[3] in
@@ -119,9 +119,6 @@ mage2docker () {
    vst)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 varnishstat
    ;;
-   stats) 
-   	docker stats $(docker inspect -f '{{.Name}}' $(docker ps -q) | cut -c 2-)
-   ;;
    mage-log)
 	docker exec -it -u www-data $1 tail -f var/log/$3
    ;;
@@ -154,7 +151,7 @@ if type "docker" > /dev/null; then
 
 	compdef _mage2docker mage2docker
 	alias m2d='mage2docker'
-
+	alias stats_m2d='docker stats $(docker inspect -f '{{.Name}}' $(docker ps -q) | cut -c 2-)'
 else
 	echo "mage2docker - docker is not installed"
 fi
