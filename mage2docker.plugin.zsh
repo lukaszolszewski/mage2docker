@@ -119,6 +119,9 @@ mage2docker () {
    vst)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 varnishstat
    ;;
+   stats) 
+   	docker stats $(docker inspect -f '{{.Name}}' $(docker ps -q) | cut -c 2-)
+   ;;
    mage-log)
 	docker exec -it -u www-data $1 tail -f var/log/$3
    ;;
