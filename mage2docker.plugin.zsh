@@ -50,7 +50,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst redis-flushall
+	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst varnish-purge redis-flushall
     ;;
     options)
         case $words[3] in
@@ -118,6 +118,9 @@ mage2docker () {
    ;;
    vst)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 varnishstat
+   ;;
+   varnish-purge)
+        docker exec -it $1 varnishadm "ban req.url ~ /"
    ;;
    mage-log)
 	docker exec -it -u www-data $1 tail -f var/log/$3
