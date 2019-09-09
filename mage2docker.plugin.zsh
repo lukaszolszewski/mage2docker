@@ -50,7 +50,7 @@ _mage2docker() {
         compadd $(_docker_get_container_name)
     ;;
     command)
-	compadd "$@" bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst varnish-purge redis-flushall
+	compadd "$@" ash ash-magento bash-www bash logs magento mage mage-cache mage-reindex mage-di mage-upgrade mage-report mage-log grunt watch rename rm restart stop inspect top mysqldump mysql ip vst varnish-purge redis-flushall
     ;;
     options)
         case $words[3] in
@@ -76,6 +76,12 @@ mage2docker () {
 	;;
    logs)
 	docker logs -f $1
+	;;
+   ash)
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 ash -l
+	;;
+   ash-magento)
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u magento $1 ash -l
 	;;
    bash)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash
