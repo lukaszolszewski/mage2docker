@@ -75,7 +75,7 @@ mage2docker () {
 	docker $2 $1
 	;;
    logs)
-	docker logs -f $1
+	docker logs --tail=25 -f $1
 	;;
    ash)
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 ash -l
