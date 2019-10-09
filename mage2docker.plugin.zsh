@@ -84,10 +84,10 @@ mage2docker () {
 	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u magento $1 ash -l
 	;;
    bash)
-	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u root $1 bash -l
 	;;
    bash-www)
-	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
+	docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash -l
 	;;
    magento)
 	docker exec -it -u www-data $1 bin/magento
@@ -149,7 +149,7 @@ mage2docker () {
 	if [ ! "$1" ]; then
    		docker ps
 	else
-		docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash
+		docker exec -it -e LINES=$(tput lines) -e COLUMNS=$(tput cols) -u www-data $1 bash -l
 	fi
    	;;
    esac
